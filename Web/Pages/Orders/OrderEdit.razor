@@ -1,0 +1,106 @@
+﻿@page "/orders/edit"
+@inherits OrderEditBase
+
+<div class="grid grid-cols-3 gap-4">
+    <div class="col-span-2">
+        <section class="text-gray-600 body-font">
+            <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-wrap -m-4">
+                    @foreach (var merchandise in Merchandises)
+                    {
+
+                        <div class="lg:w-1/4 md:w-1/2 p-4 w-full rounded-lg border-2 m-1 bg-slate-50 shadow" @onclick="@(() => AddProduct(merchandise))">
+                            <a class="block relative h-48 rounded overflow-hidden">
+                                @if (merchandise.Picture is not null)
+                                {
+                                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="@(Path.Combine("appImages", merchandise.Picture))">
+
+                                }
+                                else
+                                {
+                                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260">
+                                }
+                            </a>
+                            <div class="mt-4">
+                                @*<h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">@merchandise.Id</h3>*@
+                                <h2 class="text-gray-900 title-font text-lg font-medium">@merchandise.Name</h2>
+                                <p class="mt-1">Bs.@merchandise.Price - Disponibles: @merchandise.Quantity</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+    <div>
+        <section class="text-gray-600 body-font ">
+            <div class="bg-white w-full mt-8 ">
+                <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">PEDIDO</h2>
+
+                <EditForm Model="@Order" OnValidSubmit="@HandleValidSubmit">
+
+                    <div class="relative mb-4">
+                        <label for="nit" class="leading-7 text-sm text-gray-600">NIT</label>
+                        <br />
+                        <InputText id="nit" class="w-2/3 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                   spellcheck="false" data-ms-editor="true" @bind-Value="@Order.Invoice.Nit"></InputText>
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="name" class="leading-7 text-sm text-gray-600">Nombre</label>
+                        <br />
+                        <InputText id="name" class="w-2/3 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                   spellcheck="false" data-ms-editor="true" @bind-Value="@Order.Invoice.Name"></InputText>
+                    </div>
+
+                    @if (Order.Details.Count == 0)
+                    {
+                        <span>SELECCIONAR PRODUCTOS</span>
+                    }
+                    else
+                    {
+                        <span class="font-bold text-lg">DETALLE</span>
+                        <ul class="">
+                            @foreach (var detail in Order.Details)
+                            {
+                                <li>
+                                    @detail.Merchandise.Name
+                                    <br />
+                                    <span>
+                                        Bs.@detail.Price
+
+                                    </span>
+
+                                    <div class="inline-flex rounded-full m-l-6">
+                                        <a @onclick=@(()=>DecrementQuantity(detail))
+                                   class="text-white bg-orange-400 border-0 hover:bg-orange-600 inline-flex items-center justify-center rounded-l-full border py-1 px-2 text-center font-semibold">
+                                            -
+                                        </a>
+                                        <span class="text-black bg-slate-50 border-1 border-slate-200 inline-flex items-center justify-center border-y py-1 px-2 text-center text-lg font-semibold">
+                                            @detail.Quantity
+                                        </span>
+                                        <a @onclick=@(()=>IncrementQuantity(detail))
+                                   class="text-white bg-orange-400 border-0 hover:bg-orange-600 inline-flex items-center justify-center rounded-r-full border py-1 px-2 text-center font-semibold">
+                                            +
+                                        </a>
+                                    </div>
+
+                                </li>
+
+                            }
+                        </ul>
+                        <br />
+                        <button type="submit" class="text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded text-lg">REGISTRAR VENTA</button>
+                    }
+
+
+                </EditForm>
+
+
+
+            </div>
+        </section>
+    </div>
+
+
+
+</div>

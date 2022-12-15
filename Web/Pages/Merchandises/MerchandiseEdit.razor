@@ -1,0 +1,50 @@
+﻿@page "/merchandise/edit"
+
+@inherits MerchandiseEditBase
+
+<section class="text-gray-600 body-font ">
+    <div class="bg-white w-full mt-8 ">
+        <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Datos nueva mercaderia</h2>
+
+        <EditForm Model="@Merchandise" OnValidSubmit="@HandleValidSubmit">
+
+            <div class="relative mb-4">
+                <label for="name" class="leading-7 text-sm text-gray-600">Nombre</label>
+                <br />
+                <InputText id="name" class="w-2/3 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                           spellcheck="false" data-ms-editor="true" @bind-Value="@Merchandise.Name"></InputText>
+            </div>
+            <div class="relative mb-4">
+                <label for="detail" class="leading-7 text-sm text-gray-600">Detalles</label>
+                <br />
+                <InputTextArea id="detail" class="w-2/3 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                               spellcheck="false" data-ms-editor="true" @bind-Value="@Merchandise.Detail"></InputTextArea>
+            </div>
+            <div class="relative mb-4">
+                <label for="price" class="leading-7 text-sm text-gray-600">Precio</label>
+                <br />
+                <InputNumber id="price" @bind-Value="@Merchandise.Price"
+                             class="w-2/3 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></InputNumber>
+            </div>
+            <div class="relative mb-4">
+                <label for="quantity" class="leading-7 text-sm text-gray-600">Cantidad</label>
+                <br />
+                <InputNumber id="quantity" @bind-Value="@Merchandise.Quantity"
+                             class="w-2/3 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></InputNumber>
+            </div>
+            <div class="relative mb-4">
+                <label for="image" class="leading-7 text-sm text-gray-600">IMAGEN</label>
+                <br />
+                <InputFile id="image" OnChange="@OnInputFileChanged"
+                           class="w-2/3 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></InputFile>
+            </div>
+            <div class="space-x-4">
+
+                <a class="text-white bg-zinc-400 border-0 space-8 py-2 px-6 focus:outline-none hover:bg-zinc-600 rounded text-lg" onclick="@NavigateToOverview">Atras</a>
+                <button type="submit" class="text-white bg-orange-400 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded text-lg">GUARDAR</button>
+            </div>
+
+        </EditForm>
+
+    </div>
+</section>
